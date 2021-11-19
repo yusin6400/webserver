@@ -184,6 +184,7 @@ fd_set wait_on_clients(SOCKET server) {
 }
 
 //handle HTTP error conditions
+//400: client sends an HTTP request which our server doesn't understand
 void send_400(struct client_info *client) {
     const char *c400 = "HTTP/1.1 400 Bad Request\r\n"
         "Connection: close\r\n"
@@ -191,6 +192,7 @@ void send_400(struct client_info *client) {
     send(client->socket, c400, strlen(c400), 0);
     drop_client(client);
 }
+//404: requested resource is not found
 void send_404(struct client_info *client) {
     const char *c404 = "HTTP/1.1 404 Not Found\r\n"
         "Connection: close\r\n"
@@ -200,7 +202,7 @@ void send_404(struct client_info *client) {
 }
 
 //transfer a file to connected client
-//takes as arguments a connected client and requested resource path
+//傳送要求的resource給client
 void serve_resource(struct client_info *client, const char *path) {
 
     printf("serve_resource %s %s\n", get_client_address(client), path);
@@ -283,7 +285,7 @@ void serve_resource(struct client_info *client, const char *path) {
     drop_client(client);
 }
 
-//new code
+//++上傳檔案
 
 #define buffersize 8192
 
@@ -382,9 +384,6 @@ void uploadfile(struct client_info *client){
     upload_resorce(client,full_path);
     
 }
-
-//new code end
-
 
 int main() {
 
