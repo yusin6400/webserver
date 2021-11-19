@@ -425,7 +425,7 @@ int main() {
                     get_client_address(client));
         }
 
-        //beging our linked list walk
+        //begin our linked list walk
         struct client_info *client = clients;
         while(client) {
             struct client_info *next = client->next;
