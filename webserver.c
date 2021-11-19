@@ -103,6 +103,8 @@ struct client_info {
 static struct client_info *clients = 0; //store the root of the linked list in a global variable
 
 //takes a SOCKET variable and searches our linked list for the corresponding client_info data structure
+//accepts a SOCKET and searches through the linked list of connected clients
+//to return the relevant client_info for that SOCKET
 struct client_info *get_client(SOCKET s) {
     struct client_info *ci = clients;
 
